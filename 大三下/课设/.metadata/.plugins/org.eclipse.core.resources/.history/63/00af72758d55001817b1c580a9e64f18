@@ -1,0 +1,23 @@
+package LL1;
+
+public class RightLine {
+
+	private	char left;
+	private String right;
+	
+	public void set(char s1, String s2){
+		left= s1;
+		right= s2;
+	}
+	public String getright(){
+		String str= right;
+		return str;
+	}
+	public char getleft(){
+		char c= left;
+		return c;
+	}
+	public void printRightLine(){
+		System.out.print(left + "->" + right);
+	}
+}

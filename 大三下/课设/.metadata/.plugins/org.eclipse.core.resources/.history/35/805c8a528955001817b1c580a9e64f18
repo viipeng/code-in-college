@@ -1,0 +1,8 @@
+package LL1;
+
+public class variable {
+
+	final int N1=8;//产生式的个数
+	final int M1=6;//终结符的个数（包括‘#’)
+	final int A1=5;//非终结符的个数
+}
