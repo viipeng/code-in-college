@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digital.dao.UserInfoDAO">
+	
+	<update id="haveRefund" parameterType="com.digital.pojo.UserInfo">
+		update `user` 
+		set account_balance=#{account_balance}
+		where uid=#{uid}
+	</update>
+	
+	<update id="havePaid" parameterType="com.digital.pojo.UserInfo">
+		update `user` 
+		set account_balance=#{account_balance}
+		where uid=#{uid}
+	</update>
+	
+	<update id="addmoney" parameterType="com.digital.pojo.UserInfo">
+		update `user` 
+		set account_balance=#{account_balance}
+		where uid=#{uid}
+	</update>
+	
+	<select id="getAccount_balanceByUid" parameterType="int" resultType="float">
+		select account_balance from `user` where uid=#{uid}
+	</select>
+	
+	<!-- 这是登录专用的 -->
+	<select id="getUserInfoByCode" parameterType="com.digital.pojo.UserInfo" 
+			resultType="com.digital.pojo.UserInfo">
+		select * from user where username=#{username} and password=#{password}
+	</select>
+	
+	<!-- 这是注册专用的 -->
+	<select id="getUserInfoByUN" parameterType="com.digital.pojo.UserInfo" 
+			resultType="com.digital.pojo.UserInfo">
+		select * from user where username=#{username}
+	</select>
+	
+	<select id="getUserInfoByUid" parameterType="int" resultType="com.digital.pojo.UserInfo">
+		select * from `user` where uid=#{uid}
+	</select>
+	
+	<select id="queryAccount" parameterType="int" resultType="float">
+		select account_balance from `user` where uid=#{uid}
+	</select>
+	
+	<update id="changePassword" parameterType="com.digital.pojo.UserInfo">
+		update `user`
+		set password=#{password}
+		where uid=#{uid}
+	</update>
+	
+	<select id="getPasswordByUid" parameterType="int" resultType="java.lang.String">
+		select password from `user` where uid=#{uid}
+	</select>
+	
+	<select id="getNameByUid" parameterType="int" resultType="java.lang.String">
+		select username from `user` where uid=#{uid}
+	</select>
+	
+	<!-- 以下是后台的5个操作,前台也用到过 -->
+	<select id="getWhollyUserInfoByUid" parameterType="int" resultType="com.digital.pojo.UserInfo">
+		select * from `user` where uid=#{uid}
+	</select>
+	
+	<select id="getUserInfo" resultType="com.digital.pojo.UserInfo">
+		select * from `user`
+	</select>
+	
+	<insert id="addUser" parameterType="com.digital.pojo.UserInfo">
+		insert into `user` (username,password,usex,account_balance,ux_coordinate,uy_coordinate)
+		values(#{username},#{password},#{usex},#{account_balance},#{ux_coordinate},#{uy_coordinate})
+	</insert>
+	
+	<delete id="deleteUserInfo" parameterType="int">
+		delete from `user` where uid=#{uid}
+	</delete>
+	
+	<update id="updateUserInfo" parameterType="com.digital.pojo.UserInfo">
+		update `user` 
+		set username=#{username},password=#{password},usex=#{usex},
+			account_balance=#{account_balance},ux_coordinate=#{ux_coordinate},uy_coordinate=#{uy_coordinate}
+		where uid=#{uid}
+	</update>
+	
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digital.dao.Order_foodDAO">
+
+	<select id="getFidByOid" parameterType="int" resultType="int" >
+		select fid from order_food where oid=#{oid}
+	</select>
+	
+	<insert id="addOrder_food" parameterType="com.digital.pojo.Order_food" >
+		insert into order_food (fid,fname,fphoto,fprice,amount,oid)
+			values(#{fid},#{fname},#{fphoto},#{fprice},#{amount},#{oid})
+	</insert>
+	
+	<select id="getOFListByOid" parameterType="int" resultType="com.digital.pojo.Order_food" >
+		select * from order_food where oid=#{oid}
+	</select>
+	
+	<!-- 后台 -->
+	<select id="getOrder_foodByOFid" parameterType="int" resultType="com.digital.pojo.Order_food">
+		select * from order_food where ofid=#{ofid}
+	</select>
+	
+	<select id="getOrder_food" resultType="com.digital.pojo.Order_food">
+		select * from order_food
+	</select>
+	
+	<delete id="deleteOrder_food" parameterType="int">
+		delete from order_food where ofid=#{ofid}
+	</delete>
+	
+	<update id="updateOrder_food" parameterType="com.digital.pojo.Order_food">
+		update order_food 
+		set fid=#{fid},fname=#{fname},fphoto=#{fphoto},fprice=#{fprice},amount=#{amount},oid=#{oid}
+		where ofid=#{ofid}
+	</update>
+	
+
+</mapper>

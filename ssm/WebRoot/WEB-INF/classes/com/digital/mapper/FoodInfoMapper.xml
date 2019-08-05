@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digital.dao.FoodInfoDAO">
+
+	<select id="searchFood" parameterType="com.digital.pojo.ForSearchFood" 
+		resultType="com.digital.pojo.FoodInfo"> 
+		select *
+		from food
+		where fid in
+		(select fid
+		from food,meau,restaurant
+		where food.mid=meau.mid
+		and meau.rid=restaurant.rid
+		and restaurant.rid=#{rid}
+		and fname like#{name}
+		)
+	</select>
+	
+	<select id="getFoodInfoByPrice" parameterType="int" resultType="com.digital.pojo.FoodInfo"> 
+		select * from food where mid=#{mid} order by fprice asc
+	</select>
+	
+	<select id="getFoodInfoByPrice1" parameterType="int" resultType="com.digital.pojo.FoodInfo"> 
+		select * from food where mid=#{mid} order by fprice desc
+	</select>
+	
+	<select id="getFoodInfoBySales_volume" parameterType="int" resultType="com.digital.pojo.FoodInfo"> 
+		select * from food where mid=#{mid} order by fsales_volume desc
+	</select>
+	
+	<select id="getFoodInfoByMid" parameterType="int" resultType="com.digital.pojo.FoodInfo"> 
+		select * from food where mid=#{mid}
+	</select>
+	
+	<select id="getRankingList" resultType="com.digital.pojo.FoodInfo">
+		select * from food ORDER BY score DESC
+	</select>
+	
+	<select id="getMidByFid" parameterType="int" resultType="int" >
+		select mid from food where fid=#{fid}
+	</select>
+	
+	<select id="getFevaluationByFid" parameterType="int" resultType="int" >
+		select fevaluation from food where fid=#{fid}
+	</select>
+	
+	<select id="getScoreByFid" parameterType="int" resultType="int" >
+		select score from food where fid=#{fid}
+	</select>
+	
+	<update id="updateScoreAndFevaluation" parameterType="com.digital.pojo.FoodInfo" >
+		update food set score=#{score},fevaluation=#{fevaluation} where fid=#{fid}
+	</update>
+	
+	<update id="addGreat" parameterType="com.digital.pojo.FoodInfo" >
+		update food set great=#{great} where fid=#{fid}
+	</update>
+	
+	<update id="updateFsales_volume" parameterType="com.digital.pojo.FoodInfo" >
+		update food set fsales_volume=#{fsales_volume} where fid=#{fid}
+	</update>
+	
+	<!-- 以下是后台的5个操作 -->
+	<select id="getFoodInfoByFid" parameterType="int" resultType="com.digital.pojo.FoodInfo">
+		select * from food where fid=#{fid}
+	</select>
+	
+	<select id="getFoodInfoByFidOfRid" parameterType="com.digital.pojo.ForSearchOfRid" 
+		resultType="com.digital.pojo.FoodInfo">
+		select * 
+		from food 
+		where fid=#{fid} and mid in(
+			select mid 
+			from meau,restaurant
+			where meau.rid= restaurant.rid and restaurant.rid=#{rid} 
+		)
+	</select>
+	
+	<select id="getFoodInfoByRid" parameterType="int" resultType="com.digital.pojo.FoodInfo">
+		select * 
+		from food
+		where mid in (
+			select mid 
+			from meau,restaurant
+			where meau.rid= restaurant.rid and restaurant.rid=#{rid})
+	</select>
+	
+	<select id="getFoodInfo" resultType="com.digital.pojo.FoodInfo">
+		select * from food
+	</select>
+	
+	<insert id="addFoodInfo" parameterType="com.digital.pojo.FoodInfo">
+		insert into food(fname,fphoto,fprice,fdescription,fsales_volume,great,mid)
+		values(#{fname},#{fphoto},#{fprice},#{fdescription},#{fsales_volume},#{great},#{mid})
+	</insert>
+	
+	<delete id="deleteFoodInfo" parameterType="int">
+		delete from food where fid=#{fid}
+	</delete>
+	
+	<update id="updateFoodInfo" parameterType="com.digital.pojo.FoodInfo">
+		update food 
+		set fname=#{fname},fphoto=#{fphoto},fprice=#{fprice},fdescription=#{fdescription},
+			fsales_volume=#{fsales_volume},great=#{great},mid=#{mid}
+		where fid=#{fid}
+	</update>
+	
+</mapper>
