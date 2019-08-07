@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digital.dao.MerchantDAO">
+
+
+	<!-- 这是登录专用的 -->
+	<select id="getMerchantByCode" parameterType="com.digital.pojo.MerchantInfo" 
+			resultType="com.digital.pojo.MerchantInfo">
+		select * from merchant where merchantName=#{merchantName} and mpassword=#{mpassword}
+	</select>
+	
+	<select id="queryAccount" parameterType="int" resultType="float">
+		select account_balance from merchant where rid=#{rid}
+	</select>
+	
+	<update id="changePassword" parameterType="com.digital.pojo.MerchantInfo">
+		update merchant
+		set mpassword=#{mpassword}
+		where rid=#{rid}
+	</update>
+	
+	<select id="getPasswordByRid" parameterType="int" resultType="java.lang.String">
+		select mpassword from merchant where rid=#{rid}
+	</select>
+	
+	<select id="getMerchantByRid" parameterType="int" resultType="com.digital.pojo.MerchantInfo">
+		select * from merchant where rid=#{rid}
+	</select>
+	
+	<update id="haveRefund" parameterType="com.digital.pojo.MerchantInfo">
+		update merchant 
+		set account_balance=#{account_balance}
+		where mnid=#{mnid}
+	</update>
+	
+	<select id="getNameByRid" parameterType="int" resultType="java.lang.String">
+		select merchantName from merchant where rid=#{rid}
+	</select>
+	
+	<update id="addMoney" parameterType="com.digital.pojo.MerchantInfo">
+		update merchant 
+		set account_balance=#{account_balance}
+		where mnid=#{mnid}
+	</update>
+	
+</mapper>

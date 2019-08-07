@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digital.dao.Shopping_trolley_foodDAO">
+
+	<select id="getShopping_trolley_foodList" parameterType="int" 
+			resultType="com.digital.pojo.Shopping_trolley_food">
+		select * from shopping_trolley_food where sid=#{sid} ORDER BY sfid DESC
+	</select>
+	
+	<select id="getSTFoodBySidAndFId" parameterType="com.digital.pojo.Shopping_trolley_food" 
+		resultType="com.digital.pojo.Shopping_trolley_food">
+		select * from shopping_trolley_food where sid=#{sid} and fid=#{fid}
+	</select>
+	
+	<select id="AddFoodToShopping_trolley" 
+		parameterType="com.digital.pojo.Shopping_trolley_food">
+		insert into shopping_trolley_food (fid,fphoto,fname,fprice,amount,sid)
+			values(#{fid},#{fphoto},#{fname},#{fprice},#{amount},#{sid})
+	</select>
+	
+	<select id="UpdateAmountOfSTFood" parameterType="com.digital.pojo.Shopping_trolley_food">
+		update shopping_trolley_food
+			set amount=#{amount}
+			where sfid=#{sfid}
+	</select>
+	
+	<select id="getSTFInfoBySfid" parameterType="int" 
+		resultType="com.digital.pojo.Shopping_trolley_food">
+		select * from shopping_trolley_food where sfid=#{sfid}
+	</select>
+	
+	<select id="deleteSTFInfoBySfid" parameterType="int">
+		delete from shopping_trolley_food where sfid=#{sfid}
+	</select>
+	
+	<delete id="DeleteSTFBySid" parameterType="int">
+		delete from shopping_trolley_food where sid=#{sid}
+	</delete>
+	
+	<!-- 后台 -->
+	<select id="getShopping_trolley_food" resultType="com.digital.pojo.Shopping_trolley_food">
+		select * from shopping_trolley_food
+	</select>
+	
+	<update id="updateShopping_trolley_food" parameterType="com.digital.pojo.Shopping_trolley_food">
+		update shopping_trolley_food
+			set fid=#{fid},fname=#{fname},fphoto=#{fphoto},
+				fprice=#{fprice},amount=#{amount},sid=#{sid}
+			where sfid=#{sfid}
+	</update>
+	
+	<select id="getSTFListBySfid" resultType="com.digital.pojo.Shopping_trolley_food">
+		select * from shopping_trolley_food where sfid=#{sfid}
+	</select>
+	
+	
+</mapper>

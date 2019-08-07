@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digital.dao.Shopping_trolleyInfoDAO">
+
+	<select id="getSidByUidAndRid" parameterType="com.digital.pojo.Shopping_trolleyInfo" 
+		resultType="com.digital.pojo.Shopping_trolleyInfo"> 
+		select * from shopping_trolley where uid=#{uid} and rid=#{rid}
+	</select>
+	
+	<insert id="CompleteShopping_trolley" parameterType="com.digital.pojo.Shopping_trolleyInfo" >
+		update shopping_trolley
+			set total=#{total},foodSum=#{foodSum}
+			where sid=#{sid}
+	</insert>
+	
+	<insert id="AddShopping_trolley" parameterType="com.digital.pojo.Shopping_trolleyInfo" >
+		insert into shopping_trolley(shipping_fee,uid,rid) 
+			values(#{shipping_fee},#{uid},#{rid})
+	</insert>
+	
+	<delete id="DeleteShopping_trolley" parameterType="int">
+		delete from shopping_trolley where sid=#{sid}
+	</delete>
+	
+	<update id="DeleteSTOfUid" parameterType="int">
+		update shopping_trolley
+			set total=0,foodSum=0
+			where uid=#{uid}
+	</update>
+	
+	<select id="getSTInfoBySid" parameterType="int" 
+		resultType="com.digital.pojo.Shopping_trolleyInfo"> 
+		select * from shopping_trolley where sid=#{sid}
+	</select>
+	
+	<select id="getSidByUid" parameterType="int" resultType="int"> 
+		select sid from shopping_trolley where uid=#{uid}
+	</select>
+	
+	<!-- 后台 -->
+	<select id="getShopping_trolleyInfo" resultType="com.digital.pojo.Shopping_trolleyInfo"> 
+		select * from shopping_trolley
+	</select>
+	
+	<update id="updateSTInfo" parameterType="com.digital.pojo.Shopping_trolleyInfo">
+		update shopping_trolley 
+		set total=#{total},foodSum=#{foodSum},shipping_fee=#{shipping_fee},uid=#{uid},rid=#{rid}
+		where sid=#{sid}
+	</update>
+	
+	<insert id="addSTInfo" parameterType="com.digital.pojo.Shopping_trolleyInfo" >
+		insert into shopping_trolley (total,foodSum,shipping_fee,uid,rid)
+			values(#{total},#{foodSum},#{shipping_fee},#{uid},#{rid})
+	</insert>
+	
+</mapper>

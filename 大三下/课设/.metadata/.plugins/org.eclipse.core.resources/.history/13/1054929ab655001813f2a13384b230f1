@@ -1,0 +1,229 @@
+package LL1;
+
+import java.util.*;
+import java.lang.String;
+
+
+public class Analyze {
+
+	private	Stack inputStack;
+	private Stack analyzeStack;
+	private String predictAnalyzeGraph[][];//[A1+1][M1+1]
+	private RightLine rl[];//[N1]
+//	private String frame[][];//[100][3]
+	Variable v;
+
+	public void initialize(String str[][], RightLine r[]){
+		v= new Variable();
+		predictAnalyzeGraph= new String[v.getA1()+1][v.getM1()+1];
+		rl= new RightLine[v.getN1()];
+//		frame= new String[100][3];
+
+/*		for(int i=0; i<100; i++)
+			for(int j=0; j<3; j++){
+				frame[i][j]= "";
+			}*/
+		inputStack= new Stack();
+		analyzeStack= new Stack();
+		for(int i=0; i< v.getN1(); i++){
+			rl[i]= new RightLine();
+		}
+		for(int i=0; i<= v.getA1(); i++)
+			for(int j=0; j<= v.getM1(); j++){
+				predictAnalyzeGraph[i][j]= new String();
+				predictAnalyzeGraph[i][j]+= str[i][j];
+			}
+		for(int i=0; i< v.getN1(); i++)
+			rl[i]= r[i];
+	}
+	
+	public void analyze(char left[]){
+		char X,a;
+		String input;
+		inputStack.push('#');
+		analyzeStack.push('#');
+		Scanner sc= new Scanner(System.in);
+		System.out.print("输入字符串： ");
+		input= sc.nextLine();
+		System.out.println("分析栈\t剩余串\t产生式\t");
+		char []t= input.toCharArray();
+		for(int i= input.length()-1; i>= 0; i--){
+			inputStack.push(t[i]);
+		}
+		analyzeStack.push(left[0]);
+		int num= -1;
+		while(true){//别忘了读入下一个符号需要改变a
+			num++;//每次循环num都要加1，num指的是循环的总次数，也是总控程序的行数
+			a= (char)inputStack.peek();//a是符号栈的栈顶元素
+			X= (char)analyzeStack.peek();//X是分析栈的栈顶元素
+			if(isVT(X)){
+				if(X == a){
+/*					String add= null;
+					add+= a;
+					add+= "匹配";
+					frame[num][2]+= add;*/
+					System.out.println(a + "匹配\t");
+					inputStack.pop();
+					analyzeStack.pop();
+					continue;
+				}
+				else{
+					System.out.println("出错1");
+					break;
+				}
+			}
+			else{
+				if(X == '#'){
+					if(X == a){
+/*						String add= null;
+						add+= "接受";
+						frame[num][2]+= add;*/
+						System.out.println("接受");
+						break;
+					}
+					else{
+						System.out.println("出错2");
+						break;
+					}
+				}
+				else{
+					if(testAnalyzeStack(a, X)){
+						int i1= 0, j1= 0;
+						for(int i=1; i<= v.getA1(); i++){//行
+							int b1= predictAnalyzeGraph[i][0].indexOf(X);
+							if(b1 != -1){
+								for(int j=1; j<= v.getM1(); j++){//列
+									int b2= predictAnalyzeGraph[0][j].indexOf(a);
+									if(b2 != -1){
+										i1= i;
+										j1= j;
+									}
+								}
+							}
+						}
+						//把分析栈的数据传入总控程序
+/*						String add1= null;
+						add1= printStack(analyzeStack);
+						frame[num][0]+= add1;*/
+						
+						antiPush(i1, j1);
+						
+/*						String add3= null;
+						add3+= predictAnalyzeGraph[i1][0];
+						add3+= "->";
+						add3+= predictAnalyzeGraph[i1][j1];
+						frame[num][2]+= add3;*/
+						System.out.println(predictAnalyzeGraph[i1][0] + "->" 
+						+ predictAnalyzeGraph[i1][j1] + "\t");
+						continue;
+					}
+					else{
+						System.out.println("出错3");
+						break;
+					}
+				}
+			}
+		}
+		
+	}
+	//打印总控程序
+/*	public void printFrame(){
+		int a=0, i=0;
+		do{
+			System.out.print(frame[i][0] + "\t");
+			System.out.print(frame[i][1] + "\t");
+			System.out.println(frame[i][2] + "\t");
+			if(frame[i][2].equals("接受")){
+				a=1;
+			}
+			i++;
+		}while(a!= 1);
+	}*/
+	//把栈里的数据转化为字符串并返回
+	public String printStack(Stack sta){//不知道sta的传递是值传递还是引用传递?????????
+		String str= new String();
+		do{
+			str+= sta.pop();
+		}while(!sta.isEmpty());
+		return str;
+	}
+	//打印预测分析表
+	public void printAnalyzeGraph(){
+		for(int i=0; i<= v.getA1(); i++){
+			for(int j=0; j<= v.getM1(); j++){
+				if(!predictAnalyzeGraph[i][j].equals("-1"))
+					System.out.print(predictAnalyzeGraph[i][j]);
+				System.out.print("\t");
+			}
+			System.out.println();
+		}
+	}
+	//测试是否是产生式
+	//测试M[X,a]是否在预测分析表中
+	public boolean testAnalyzeStack(char a, char X){
+		for(int i=1; i<= v.getA1(); i++){//行
+			int b1= predictAnalyzeGraph[i][0].indexOf(X, 0);
+			if(b1 != -1){
+				for(int j=1; j<= v.getM1(); j++){//列
+					int b2= predictAnalyzeGraph[0][j].indexOf(a, 0);
+					if(b2 != -1){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	//逆序入栈
+	//把匹配成功的产生式压入分析栈中，不过要逆序
+	public void antiPush(int i, int j){
+		analyzeStack.pop();
+		//当分析栈的栈顶元素推到空串时，不用把空串压入分析栈
+		if(!predictAnalyzeGraph[i][j].equals("0")){
+			for(int k= predictAnalyzeGraph[i][j].length()-1; k>= 0; k--){
+				analyzeStack.push(predictAnalyzeGraph[i][j].charAt(k));
+			}
+		}
+	}	
+	//是否是终结符
+	public boolean isVT(char c){
+		for(int i=1; i< v.getM1(); i++){
+			int a= predictAnalyzeGraph[0][i].indexOf(c);
+			if(a!= -1){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Stack getInputStack() {
+		return inputStack;
+	}
+	public void setInputStack(Stack inputStack) {
+		this.inputStack = inputStack;
+	}
+	public Stack getAnalyzeStack() {
+		return analyzeStack;
+	}
+	public void setAnalyzeStack(Stack analyzeStack) {
+		this.analyzeStack = analyzeStack;
+	}	
+	public String[][] getPredictAnalyzeGraph() {
+		return predictAnalyzeGraph;
+	}
+	public void setPredictAnalyzeGraph(String[][] predictAnalyzeGraph) {
+		this.predictAnalyzeGraph = predictAnalyzeGraph;
+	}
+	public RightLine[] getRl() {
+		return rl;
+	}
+	public void setRl(RightLine[] rl) {
+		this.rl = rl;
+	}
+/*	public String[][] getFrame() {
+		return frame;
+	}
+	public void setFrame(String[][] frame) {
+		this.frame = frame;
+	}*/
+}

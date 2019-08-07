@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digital.dao.OrderInfoDAO">
+
+	<select id="getOid" resultType="int"> 
+		select max(oid) from `order`
+	</select>
+	
+	<insert id="ordering" parameterType="com.digital.pojo.OrderInfo">
+		insert into `order`(rname,rphoto,all_food,consumption,ostate,odate,visible,uid,rid)
+			values(#{rname},#{rphoto},#{all_food},#{consumption},#{ostate},#{odate},#{visible},#{uid},#{rid})
+	</insert>
+	
+	<select id="getOrderInfoByUid" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where uid=#{uid} and visible=1 ORDER BY oid DESC
+	</select>
+	
+	<select id="getEOrderByUid" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where uid=#{uid} and visible=1 and ostate="待评价" ORDER BY oid DESC
+	</select>
+	
+	<select id="getSOrderByUid" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where uid=#{uid} and visible=1 and ostate="途中" ORDER BY oid DESC
+	</select>
+	
+	<select id="getPOrderByUid" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where uid=#{uid} and visible=1 and ostate="待付款" ORDER BY oid DESC
+	</select>
+	
+	<select id="getROrderByUid1" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where uid=#{uid} and visible=1 and ostate="待退款" ORDER BY oid DESC
+	</select>
+	
+	<select id="getROrderByUid2" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where uid=#{uid} and visible=1 and ostate="已退款" ORDER BY oid DESC
+	</select>
+	
+	<select id="getOrderInfoByRid" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where rid=#{rid} ORDER BY oid DESC
+	</select>
+	
+	<select id="getEOrderByRid" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where rid=#{rid} and ostate="待评价" ORDER BY oid DESC
+	</select>
+	
+	<select id="getSOrderByRid" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where rid=#{rid} and ostate="途中" ORDER BY oid DESC
+	</select>
+	
+	<select id="getPOrderByRid" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where rid=#{rid} and ostate="待付款" ORDER BY oid DESC
+	</select>
+	
+	<select id="getROrderByRid1" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where rid=#{rid} and ostate="待退款" ORDER BY oid DESC
+	</select>
+	
+	<select id="getROrderByRid2" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select * from `order` where rid=#{rid} and ostate="已退款" ORDER BY oid DESC
+	</select>
+	
+	<update id="inVisibleOrder" parameterType="int" >
+		update `order` 
+		set visible=0
+		where oid=#{oid}
+	</update>
+	
+	<update id="isSent" parameterType="int" >
+		update `order` 
+		set ostate="待评价"
+		where oid=#{oid}
+	</update>
+	
+	<update id="havePaid" parameterType="int" >
+		update `order` 
+		set ostate="途中"
+		where oid=#{oid}
+	</update>
+	
+	<update id="haveRefund" parameterType="int" >
+		update `order` 
+		set ostate="已退款"
+		where oid=#{oid}
+	</update>
+	
+	<update id="evaluate" parameterType="int" >
+		update `order` 
+		set ostate="完成"
+		where oid=#{oid}
+	</update>
+	
+	<update id="appealRefund" parameterType="int" >
+		update `order` 
+		set ostate="待退款"
+		where oid=#{oid}
+	</update>
+	
+	<update id="cancelRefund" parameterType="int" >
+		update `order` 
+		set ostate="途中"
+		where oid=#{oid}
+	</update>
+	
+	<update id="permitRefund" parameterType="int" >
+		update `order` 
+		set ostate="已退款"
+		where oid=#{oid}
+	</update>
+	
+	<update id="refuseRefund" parameterType="int" >
+		update `order` 
+		set ostate="途中"
+		where oid=#{oid}
+	</update>
+	
+	<!-- <delete id="cancelOrder" parameterType="int" >
+		delete `order` 
+		set ostate="完成"
+		where oid=#{oid}
+	</delete> -->
+	
+	<!-- <select id="getOrderInfoByUid" parameterType="int" resultType="com.digital.pojo.OrderInfo"> 
+		select oid,fname,ostate,odate,oevaluation,dname,rname
+		from restaurant,`order`,deliverer,food
+		where restaurant.rid=`order`.rid AND 
+			`order`.did=deliverer.did AND `order`.fid=food.fid AND uid=#{uid} ORDER BY oid DESC
+	</select> -->
+	
+	<insert id="addOrder" parameterType="com.digital.pojo.OrderInfo">
+		insert into `order`(ostate,odate,uid,did,rid,mid,fid)
+			values(#{ostate},#{odate},#{uid},#{did},#{rid},#{mid},#{fid})
+	</insert>
+	
+	<update id="updateOrder" parameterType="com.digital.pojo.OrderInfo" >
+		update `order` 
+		set ostate=#{ostate},oevaluation=#{oevaluation}
+		where oid=#{oid}
+	</update>
+	
+	<select id="getFidByOid" parameterType="int" resultType="int" >
+		select fid from `order` where oid=#{oid}
+	</select>
+	
+	<!-- 以下是后台的5个操作 -->
+	<select id="getOrderInfo" resultType="com.digital.pojo.OrderInfo">
+		select * from `order`
+	</select>
+	
+	<select id="getOrderInfoByoid" parameterType="int" resultType="com.digital.pojo.OrderInfo">
+		select * from `order` where oid=#{oid}
+	</select>
+	
+	<select id="getOrderInfoByoidOfRid" parameterType="int" resultType="com.digital.pojo.OrderInfo">
+		select * from `order` where oid=#{oid} and rid=#{rid}
+	</select>
+	
+	<insert id="addOrderInfo" parameterType="com.digital.pojo.OrderInfo">
+		insert into `order`(rname,rphoto,all_food,consumption,ostate,odate,visible,uid,rid)
+		values(#{rname},#{rphoto},#{all_food},#{consumption},#{ostate},#{odate},#{visible},#{uid},#{rid})
+	</insert>
+	
+	<delete id="deleteOrderInfo" parameterType="int">
+		delete from `order` where oid=#{oid}
+	</delete>
+	
+	<update id="updateOrderInfo" parameterType="com.digital.pojo.OrderInfo">
+		update `order` 
+		set rname=#{rname},rphoto=#{rphoto},all_food=#{all_food},consumption=#{consumption},ostate=#{ostate},odate=#{odate},visible=#{visible},uid=#{uid},rid=#{rid}
+		where oid=#{oid}
+	</update>
+</mapper>
