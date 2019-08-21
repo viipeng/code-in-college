@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digital.dao.EvaluationDAO">
+
+	<select id="getEvaluationByRid" parameterType="int" 
+			resultType="com.digital.pojo.Evaluation">
+		select * from evaluation where rid=#{rid} ORDER BY eid DESC
+	</select>
+	
+	<insert id="addEvaluation" parameterType="com.digital.pojo.Evaluation" >
+		insert into evaluation(username,anonymous,estar,edate,content,is_recommend,all_food,oid,uid,rid)
+			values(#{username},#{anonymous},#{estar},#{edate},#{content},#{is_recommend},#{all_food},#{oid},#{uid},#{rid})
+	</insert>
+	
+	<!-- 以下是后台的5个操作,前台也用到过 -->
+	<select id="getEvaluationByEid" parameterType="int" resultType="com.digital.pojo.Evaluation">
+		select * from evaluation where eid=#{eid}
+	</select>
+	
+	<select id="getEvaluationByEidOfRid" parameterType="com.digital.pojo.ForSearchOfRid" 
+		resultType="com.digital.pojo.Evaluation">
+		select * from evaluation where eid=#{eid} and rid=#{rid}
+	</select>
+	
+	<select id="getAllEvaluation" resultType="com.digital.pojo.Evaluation">
+		select * from evaluation
+	</select>
+	
+	<delete id="deleteEvaluation" parameterType="int">
+		delete from evaluation where eid=#{eid}
+	</delete>
+	
+	<update id="updateEvaluation" parameterType="com.digital.pojo.Evaluation">
+		update evaluation 
+		set username=#{username},anonymous=#{anonymous},estar=#{estar},edate=#{edate},
+			content=#{content},is_recommend=#{is_recommend},all_food=#{all_food},oid=#{oid},
+			uid=#{uid},rid=#{rid}
+		where eid=#{eid}
+	</update>
+	
+
+</mapper>

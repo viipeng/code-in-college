@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digital.dao.MeauInfoDAO">
+
+	<!-- 下面的select是给菜单排序，应该用不着 -->
+	<!-- <select id="getMeauInfo" resultType="com.digital.pojo.MeauInfo"> 
+		select mid,mname,mphoto,mdescription,rname 
+		from meau,restaurant
+		where meau.rid= restaurant.rid  ORDER BY mid ASC
+	</select> -->
+	
+	<select id="getRidByMid" parameterType="int" resultType="int">
+		select rid from meau where mid=#{mid}
+	</select>
+	
+	<select id="getMeauInfoByrid" resultType="com.digital.pojo.MeauInfo">
+		select * from meau where rid=#{rid}
+	</select>
+	
+	<!-- 以下是后台的5个操作 -->
+	<select id="getMeauInfoBymid" parameterType="int" resultType="com.digital.pojo.MeauInfo">
+		select * from meau where mid=#{mid}
+	</select>
+	
+	<select id="getMeauInfoBymidOfRid" parameterType="com.digital.pojo.ForSearchOfRid" 
+		resultType="com.digital.pojo.MeauInfo">
+		select * 
+		from meau 
+		where mid=#{mid} and mid in (
+			select mid 
+			from meau,restaurant
+			where meau.rid= restaurant.rid and restaurant.rid=#{rid} 
+		)
+	</select>
+	
+	<select id="getMeauInfo" resultType="com.digital.pojo.MeauInfo">
+		select * from meau
+	</select>
+	
+	<insert id="addMeauInfo" parameterType="com.digital.pojo.MeauInfo">
+		insert into meau(mname,rid)
+		values(#{mname},#{rid})
+	</insert>
+	
+	<delete id="deleteMeauInfo" parameterType="int">
+		delete from meau where mid=#{mid}
+	</delete>
+	
+	<update id="updateMeauInfo" parameterType="com.digital.pojo.MeauInfo">
+		update meau 
+		set mname=#{mname},rid=#{rid}
+		where mid=#{mid}
+	</update>
+	
+</mapper>
