@@ -1,0 +1,17 @@
+#Thu Jun 29 01:39:47 CST 2017
+eclipse.preferences.version=1
+encoding//WebRoot/Author/Author_delete.jsp=UTF-8
+encoding//WebRoot/Download/Download.jsp=UTF-8
+encoding//WebRoot/Download/Download_query1.jsp=UTF-8
+encoding//WebRoot/Novel/Novel_add.jsp=UTF-8
+encoding//WebRoot/Reader/Reader.jsp=UTF-8
+encoding//WebRoot/Reader/Reader_change.jsp=UTF-8
+encoding//WebRoot/Reader/Reader_delete.jsp=UTF-8
+encoding//WebRoot/Reader_authority/Author_query.jsp=UTF-8
+encoding//WebRoot/Reader_authority/Download_query1.jsp=UTF-8
+encoding//WebRoot/Reader_authority/Novel_query1.jsp=UTF-8
+encoding//WebRoot/Reader_authority/Reader_query.jsp=UTF-8
+encoding//WebRoot/index.jsp=UTF-8
+encoding//WebRoot/register.jsp=UTF-8
+encoding//WebRoot/start_download_list.jsp=UTF-8
+encoding//src/Bean/add_delete_change_query.java=UTF-8
