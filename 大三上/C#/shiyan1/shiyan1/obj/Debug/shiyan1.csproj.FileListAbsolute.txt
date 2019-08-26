@@ -1,0 +1,6 @@
+E:\C#\shiyan1\shiyan1\bin\Debug\shiyan1.exe.config
+E:\C#\shiyan1\shiyan1\bin\Debug\shiyan1.exe
+E:\C#\shiyan1\shiyan1\bin\Debug\shiyan1.pdb
+E:\C#\shiyan1\shiyan1\obj\Debug\shiyan1.csprojResolveAssemblyReference.cache
+E:\C#\shiyan1\shiyan1\obj\Debug\shiyan1.exe
+E:\C#\shiyan1\shiyan1\obj\Debug\shiyan1.pdb

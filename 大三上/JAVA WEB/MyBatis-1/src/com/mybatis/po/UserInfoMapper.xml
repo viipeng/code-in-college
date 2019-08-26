@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.po.UserInfoMapper">
+	<insert id="addUserInfo" parameterType="UserInfo">
+		insert into table_usr(userName,password,realName)
+		values(#{userName},#{password},#{realName})
+	</insert>
+	<select id="getUserInfoById" parameterType="int" resultType="UserInfo">
+		select * from table_usr where id=#{id}
+	</select>
+	<select id="getUsers" resultType="UserInfo">
+		select * from table_usr
+	</select>
+	<update id="updateUserInfo" parameterType="UserInfo">
+		update table_usr 
+		set userName=#{userName},password=#{password},realName=#{realName}
+		where id=#{id}
+	</update>
+	<delete id="deleteUser" parameterType="int">
+		delete from table_usr where id=#{id}
+	</delete>
+</mapper>

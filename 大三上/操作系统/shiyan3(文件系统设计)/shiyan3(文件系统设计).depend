@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1512636543 source:e:\操作系统\shiyan3(文件系统设计)\main.c
+	<stdio.h>
+	<string.h>
+

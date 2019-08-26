@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1510147162 source:e:\算法设计与分析\实验2\shiyan2.2\main.cpp
+	<iostream>
+	"variable.h"
+
+1510750317 e:\算法设计与分析\实验2\shiyan2.2\variable.h
+	"iostream"
+

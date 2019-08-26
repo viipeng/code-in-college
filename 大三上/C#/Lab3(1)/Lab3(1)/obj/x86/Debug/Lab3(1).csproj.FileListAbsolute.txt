@@ -1,0 +1,16 @@
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab3(1)\Lab3(1)\bin\Debug\Lab3(1).exe
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab3(1)\Lab3(1)\bin\Debug\Lab3(1).pdb
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3(1).csprojResolveAssemblyReference.cache
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3_1_.Form1.resources
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3_1_.Properties.Resources.resources
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3(1).csproj.GenerateResource.Cache
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3(1).exe
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3(1).pdb
+E:\C#\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3(1).exe
+E:\C#\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3(1).pdb
+E:\C#\Lab3(1)\Lab3(1)\bin\Debug\Lab3(1).exe
+E:\C#\Lab3(1)\Lab3(1)\bin\Debug\Lab3(1).pdb
+E:\C#\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3(1).csprojResolveAssemblyReference.cache
+E:\C#\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3_1_.Form1.resources
+E:\C#\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3_1_.Properties.Resources.resources
+E:\C#\Lab3(1)\Lab3(1)\obj\x86\Debug\Lab3(1).csproj.GenerateResource.Cache

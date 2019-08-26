@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+<!-- 数据源配置 -->
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+   <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+   <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/digital"></property>
+   <property name="user" value="csdb"></property>
+   <property name="password" value="w6xD7bh75JvbeBur"></property>
+   <property name="maxPoolSize" value="10"></property>
+   <property name="minPoolSize" value="5"></property>
+</bean>
+<!-- 配置sessionfactory -->
+<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+   <property name="dataSource" >
+   <ref bean="dataSource"/>
+</property>
+<property name="hibernateProperties">
+   <props>
+       <prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+   </props>
+</property>
+   <property name="mappingResources">
+       <list>
+            <value>com/digital/entity/UserInfo.hbm.xml</value>
+            <value>com/digital/entity/ProductInfo.hbm.xml</value>
+            <value>com/digital/entity/Type.hbm.xml</value>
+       </list>
+   </property>
+</bean>
+<!-- 创建事务管理器 -->
+<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+   <property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<!-- 事物通知 -->
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+   <!-- 指定事物传播规则 -->
+   <tx:attributes>
+       <tx:method name="*" propagation="REQUIRED"/>
+   </tx:attributes>
+</tx:advice>
+<!-- aop 配置-->
+<aop:config>
+   <aop:pointcut expression="execution(* com.digital.service.*.*(..))" id="serviceMethods"/>
+   <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/>
+</aop:config>
+<bean id="userInfoDAO" class="com.digital.dao.impl.UserInfoDAOImpl">
+   <property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<bean id="userInfoService" class="com.digital.service.impl.UserInfoServiceImpl">
+   <property name="userInfoDAO" ref="userInfoDAO"></property>
+</bean>
+<bean id="uiAction" class="com.digital.action.UserInfoAction">
+   <property name="userInfoService" ref="userInfoService"></property>
+</bean>
+<!-- 配置dao -->
+<bean id="typeDao" class="com.digital.dao.impl.TypeDAOImpl">
+   <property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<bean id="productInfoDao" class="com.digital.dao.impl.ProductInfoDAOImpl">
+   <property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<!-- 配置service -->
+<bean id="productInfoService" class="com.digital.service.impl.ProductInfoServiceImpl">
+   <property name="productInfoDAO" ref="productInfoDao"></property>
+</bean>
+<bean id="typeService" class="com.digital.service.impl.TypeServiceImpl">
+   <property name="typeDAO" ref="typeDao"></property>
+</bean>
+<!-- 配置action层 -->
+<bean id="piAction" class="com.digital.action.ProductInfoAction">
+   <property name="typeService" ref="typeService"></property>
+   <property name="productInfoService" ref="productInfoService"></property>
+</bean>
+<bean id="cartAction" class="com.digital.action.CartAction">
+   <property name="productInfoService" ref="productInfoService"></property>
+</bean>
+</beans>

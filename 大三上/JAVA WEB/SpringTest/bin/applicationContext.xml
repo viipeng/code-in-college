@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+    <bean id="userDAO" class="com.shw.dao.impl.UserInfoDaoImpl">
+    </bean>
+    
+	<bean id="userInfoService" class="com.shw.service.impl.UserInfoServiceImpl">
+		<property name="userInfoDAO" ref="userDAO"></property>
+	</bean>
+	<!-- 业务类 -->
+	<bean id="productInfoService" class="com.shw.service.impl.ProductInfoServiceImpl"></bean>
+	<!-- 切面类 -->
+	<bean id="allLogAdvice" class="com.shw.aop.AllLogAdvice"></bean> 
+	<aop:config>
+		<!-- 配置日志切面 -->
+		<aop:aspect id="logAop" ref="allLogAdvice" >
+			<!-- 定义切入点 -->
+			<aop:pointcut expression="execution(* com.shw.service.ProductInfoService.*(..))" id="LogPc"/>
+			<!-- 配置通知 -->
+			<aop:before method="writeLog"  pointcut-ref="LogPc"/>
+		</aop:aspect>
+	</aop:config>
+	
+	
+	
+	
+</beans>

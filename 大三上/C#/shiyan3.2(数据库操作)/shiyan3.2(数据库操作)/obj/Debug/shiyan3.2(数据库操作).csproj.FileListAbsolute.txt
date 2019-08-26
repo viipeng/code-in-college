@@ -1,0 +1,1 @@
+E:\C#\shiyan3.2(数据库操作)\shiyan3.2(数据库操作)\bin\Debug\shiyan3.2(数据库操作).exe.config

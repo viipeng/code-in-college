@@ -1,0 +1,8 @@
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab1(3)\Lab1(3)\bin\Debug\Lab1(3).exe
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab1(3)\Lab1(3)\bin\Debug\Lab1(3).pdb
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab1(3)\Lab1(3)\obj\x86\Debug\Lab1(3).exe
+C:\Users\asus\Desktop\文档\课程\未学\c#程序设计\Lab1(3)\Lab1(3)\obj\x86\Debug\Lab1(3).pdb
+E:\C#\Lab1(3)\Lab1(3)\obj\x86\Debug\Lab1(3).exe
+E:\C#\Lab1(3)\Lab1(3)\obj\x86\Debug\Lab1(3).pdb
+E:\C#\Lab1(3)\Lab1(3)\bin\Debug\Lab1(3).exe
+E:\C#\Lab1(3)\Lab1(3)\bin\Debug\Lab1(3).pdb
